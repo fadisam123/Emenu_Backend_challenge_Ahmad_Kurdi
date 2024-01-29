@@ -1,11 +1,11 @@
 ﻿namespace Domain.Entities
 {
-    public class ProductLanguage : Base
+    public class ProductLanguage : BaseEntity
     {
         #region Properties
         public String languageCode { get; set; } = null!;
         public String Name { get; set; } = null!;
-        public String? Desc { get; set; };
+        public String? Desc { get; set; }
         #endregion
 
         #region Navigation Properties

@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities
 {
-    public class Product : Base
+    public class Product : BaseEntity
     {
         #region Properties
         public String Name { get; set; } = null!;
@@ -10,7 +10,7 @@
         #region Navigation Properties
         public virtual ICollection<ProductLanguage> ProductLanguages { get; set; } = new List<ProductLanguage>();
 
-        public int? MainImageId { get; set; }
+        public Guid? MainImageId { get; set; }
         public virtual Image? MainImage { get; set; }
 
         public virtual ICollection<Image> Images { get; set; } = new List<Image>();

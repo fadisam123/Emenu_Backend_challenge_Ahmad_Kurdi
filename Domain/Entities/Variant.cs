@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities
 {
-    public class Variant : Base
+    public class Variant : BaseEntity
     {
         #region Properties
         public String Value { get; set; } = null!;

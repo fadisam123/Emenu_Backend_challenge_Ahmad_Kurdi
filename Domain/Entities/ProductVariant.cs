@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities
 {
-    public class ProductVariant : Base
+    public class ProductVariant : BaseEntity
     {
         #region Properties
 

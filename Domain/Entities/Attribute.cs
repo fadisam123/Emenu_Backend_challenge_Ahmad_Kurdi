@@ -2,7 +2,7 @@
 
 namespace Domain.Entities
 {
-    public class Attribute : Base
+    public class Attribute : BaseEntity
     {
         #region Properties
         public String Name { get; set; } = null!;

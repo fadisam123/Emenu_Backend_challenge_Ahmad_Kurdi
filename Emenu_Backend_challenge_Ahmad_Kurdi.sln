@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emenu_Backend_challenge_Ahm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{7F4994B4-8882-45DD-9543-5D2117385A89}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{FD4D3D19-532D-4E0B-9C41-AC48AA007065}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{8A106DAD-D59B-433D-9BE6-9F8C2CE14489}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{7F4994B4-8882-45DD-9543-5D2117385A89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F4994B4-8882-45DD-9543-5D2117385A89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F4994B4-8882-45DD-9543-5D2117385A89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD4D3D19-532D-4E0B-9C41-AC48AA007065}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD4D3D19-532D-4E0B-9C41-AC48AA007065}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD4D3D19-532D-4E0B-9C41-AC48AA007065}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD4D3D19-532D-4E0B-9C41-AC48AA007065}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A106DAD-D59B-433D-9BE6-9F8C2CE14489}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A106DAD-D59B-433D-9BE6-9F8C2CE14489}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A106DAD-D59B-433D-9BE6-9F8C2CE14489}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A106DAD-D59B-433D-9BE6-9F8C2CE14489}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities
 {
-    public class VariantImage : Base
+    public class VariantImage : BaseEntity
     {
         #region Properties
 
