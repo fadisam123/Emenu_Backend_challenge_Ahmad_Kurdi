@@ -18,12 +18,45 @@ namespace Infrastructure.Persistence
                 await dbContext.Database.MigrateAsync();
             }
 
+
             await SeedAttributesAsync(dbContext);
             await SeedVariantsAsync(dbContext);
             await SeedProductsAsync(dbContext);
             await SeedProductLanguageAsync(dbContext);
             await SeedProductsVariantsAsync(dbContext);
+            await SeedImagesAsync(dbContext);
+            await SeedVariantImagesAsync(dbContext);
 
+        }
+
+        private static async Task SeedImagesAsync(AppDbContext dbContext)
+        {
+            if (!dbContext.Images.Any())
+            {
+                var images = new List<Image>
+                {
+                    new Image { Product = dbContext.Products.First(p => p.Name == "T-Shirt"), IsMain = true, Path = @"C:\image\path.jpg" },
+                    new Image { Product = dbContext.Products.First(p => p.Name == "T-Shirt"), Path = @"C:\image\path2.jpg" },
+                    new Image { Product = dbContext.Products.First(p => p.Name == "T-Shirt"), Path = @"C:\image\path3.jpg" },
+                    new Image { Product = dbContext.Products.First(p => p.Name == "T-Shirt"), Path = @"C:\image\path4.jpg" }
+                };
+                await dbContext.Images.AddRangeAsync(images);
+                await dbContext.SaveChangesAsync();
+            }
+        }
+
+        private static async Task SeedVariantImagesAsync(AppDbContext dbContext)
+        {
+            if (!dbContext.VariantImages.Any())
+            {
+                var variantImages = new List<VariantImage>
+                {
+                    new VariantImage { ProductVariant = dbContext.ProductVariants.First(pv => pv.Product.Name == "T-Shirt" && pv.Variant.Value == "Green"), Image = dbContext.Images.First(i => i.Path == @"C:\image\path2.jpg") },
+                    new VariantImage { ProductVariant = dbContext.ProductVariants.First(pv => pv.Product.Name == "T-Shirt" && pv.Variant.Value == "Green"), Image = dbContext.Images.First(i => i.Path == @"C:\image\path3.jpg") },
+                };
+                await dbContext.VariantImages.AddRangeAsync(variantImages);
+                await dbContext.SaveChangesAsync();
+            }
         }
 
         private static async Task SeedProductsVariantsAsync(AppDbContext dbContext)
@@ -34,13 +67,15 @@ namespace Infrastructure.Persistence
                 {
                     new ProductVariant { Product = dbContext.Products.First(p => p.Name == "T-Shirt"), Variant = dbContext.Variants.First(v => v.Value == "Red")},
                     new ProductVariant { Product = dbContext.Products.First(p => p.Name == "T-Shirt"), Variant = dbContext.Variants.First(v => v.Value == "Green")},
-                    new ProductVariant { Product = dbContext.Products.First(p => p.Name == "T-Shirt"), Variant = dbContext.Variants.First(v => v.Value == "s")},
-                    new ProductVariant { Product = dbContext.Products.First(p => p.Name == "T-Shirt"), Variant = dbContext.Variants.First(v => v.Value == "m")},
                     new ProductVariant { Product = dbContext.Products.First(p => p.Name == "T-Shirt"), Variant = dbContext.Variants.First(v => v.Value == "l")},
+                    new ProductVariant { Product = dbContext.Products.First(p => p.Name == "T-Shirt"), Variant = dbContext.Variants.First(v => v.Value == "60% cotton, 40% polyester")},
                     new ProductVariant { Product = dbContext.Products.First(p => p.Name == "Battary"), Variant = dbContext.Variants.First(v => v.Value == "10AH")},
+                    new ProductVariant { Product = dbContext.Products.First(p => p.Name == "Battary"), Variant = dbContext.Variants.First(v => v.Value == "9800mAH")},
                     new ProductVariant { Product = dbContext.Products.First(p => p.Name == "Hat"), Variant = dbContext.Variants.First(v => v.Value == "Blue")},
                     new ProductVariant { Product = dbContext.Products.First(p => p.Name == "T-Shirt2"), Variant = dbContext.Variants.First(v => v.Value == "s")},
                     new ProductVariant { Product = dbContext.Products.First(p => p.Name == "T-Shirt2"), Variant = dbContext.Variants.First(v => v.Value == "m")},
+                    new ProductVariant { Product = dbContext.Products.First(p => p.Name == "T-Shirt2"), Variant = dbContext.Variants.First(v => v.Value == "Blue")},
+                    new ProductVariant { Product = dbContext.Products.First(p => p.Name == "T-Shirt2"), Variant = dbContext.Variants.First(v => v.Value == "100% cotton")},
                 };
                 await dbContext.ProductVariants.AddRangeAsync(productVariants);
                 await dbContext.SaveChangesAsync();
@@ -97,7 +132,7 @@ namespace Infrastructure.Persistence
                     new Variant { Attribute = dbContext.Attributes.First(a => a.Name == "Material"), Value = "100% cotton"},
 
                     new Variant { Attribute = dbContext.Attributes.First(a => a.Name == "Capacity"), Value = "10AH"},
-                    new Variant { Attribute = dbContext.Attributes.First(a => a.Name == "Capacity"), Value = "1000mAH"},
+                    new Variant { Attribute = dbContext.Attributes.First(a => a.Name == "Capacity"), Value = "9800mAH"},
                 };
                 await dbContext.Variants.AddRangeAsync(variants);
                 await dbContext.SaveChangesAsync();

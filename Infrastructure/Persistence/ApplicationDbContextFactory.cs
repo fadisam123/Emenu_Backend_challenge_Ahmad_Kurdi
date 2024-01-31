@@ -10,7 +10,7 @@ namespace Infrastructure.Persistence
         {
             var serviceProvider = new ServiceCollection()
                 .AddDbContext<AppDbContext>(options =>
-                    options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=EmenuDB;Trusted_Connection=True;"))
+                    options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=EmenuDB_Ahmad_kurdi;Trusted_Connection=True;"))
                 .BuildServiceProvider();
 
             return serviceProvider.GetRequiredService<AppDbContext>();

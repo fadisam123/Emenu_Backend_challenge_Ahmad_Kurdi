@@ -24,28 +24,35 @@ namespace Infrastructure.Persistence.Repository
             await _dbSet.AddRangeAsync(entities);
         }
 
+        public async Task<int> CountAsync()
+        {
+            int totalCount = await _dbSet.CountAsync();
+            return totalCount;
+        }
+
         public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> expression)
         {
             return await _dbSet.Where(expression).ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> expression)
         {
-            return await _dbSet.ToListAsync();
+            return await _dbSet.FirstOrDefaultAsync(expression);
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> filter = null!, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null!, int? top = null, int? skip = null, params string[] includeProperties)
+        public async Task<IEnumerable<T>> GetAllAsync
+            (
+                Expression<Func<T, bool>>? filter = null,
+                Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+                int? take = null,
+                int? skip = null
+            )
         {
             IQueryable<T> query = _dbSet;
 
             if (filter != null)
             {
                 query = query.Where(filter);
-            }
-
-            if (includeProperties.Length > 0)
-            {
-                query = includeProperties.Aggregate(query, (theQuery, theInclude) => theQuery.Include(theInclude));
             }
 
             if (orderBy != null)
@@ -58,9 +65,9 @@ namespace Infrastructure.Persistence.Repository
                 query = query.Skip(skip.Value);
             }
 
-            if (top.HasValue)
+            if (take.HasValue)
             {
-                query = query.Take(top.Value);
+                query = query.Take(take.Value);
             }
 
             return await query.ToListAsync();
@@ -83,9 +90,10 @@ namespace Infrastructure.Persistence.Repository
             return Task.CompletedTask;
         }
 
-        public void Update(T entity)
+        public Task UpdateAsync(T entity)
         {
             _dbSet.Update(entity);
+            return Task.CompletedTask;
         }
     }
 }

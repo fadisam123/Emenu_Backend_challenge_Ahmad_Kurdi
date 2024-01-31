@@ -50,22 +50,22 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AdditionalProductId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("MainProductId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Path")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("AdditionalProductId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Images", "Emenu");
                 });
@@ -82,18 +82,11 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Desc")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("MainImageId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MainImageId")
-                        .IsUnique()
-                        .HasFilter("[MainImageId] IS NOT NULL");
 
                     b.ToTable("Products", "Emenu");
                 });
@@ -201,23 +194,13 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Image", b =>
                 {
-                    b.HasOne("Domain.Entities.Product", "AdditionalProduct")
+                    b.HasOne("Domain.Entities.Product", "Product")
                         .WithMany("Images")
-                        .HasForeignKey("AdditionalProductId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("AdditionalProduct");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Product", b =>
-                {
-                    b.HasOne("Domain.Entities.Image", "MainImage")
-                        .WithOne("MainProduct")
-                        .HasForeignKey("Domain.Entities.Product", "MainImageId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("MainImage");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Domain.Entities.ProductLanguage", b =>
@@ -287,9 +270,6 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Image", b =>
                 {
-                    b.Navigation("MainProduct")
-                        .IsRequired();
-
                     b.Navigation("VariantImages");
                 });
 

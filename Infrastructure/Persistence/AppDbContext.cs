@@ -21,19 +21,6 @@ namespace Infrastructure.Persistence
 
             modelBuilder.HasDefaultSchema("Emenu");
 
-            // Here I am configuring the foreign keys of Product/Image manually
-            modelBuilder.Entity<Product>()
-                .HasOne(p => p.MainImage)
-                .WithOne(i => i.MainProduct)
-                .HasForeignKey<Product>(p => p.MainImageId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<Product>()
-                .HasMany(p => p.Images)
-                .WithOne(i => i.AdditionalProduct)
-                .HasForeignKey(i => i.AdditionalProductId)
-                .OnDelete(DeleteBehavior.NoAction);
-
             modelBuilder.Entity<ProductVariant>()
                 .HasMany(pv => pv.VariantImages)
                 .WithOne(vi => vi.ProductVariant)

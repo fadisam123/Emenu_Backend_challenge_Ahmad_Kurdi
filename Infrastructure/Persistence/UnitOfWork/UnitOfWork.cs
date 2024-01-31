@@ -1,10 +1,4 @@
 ﻿using Application.Persistence.UnitOfWork;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence.UnitOfWork
 {
@@ -43,9 +37,24 @@ namespace Infrastructure.Persistence.UnitOfWork
         public IVariantImageRepository VariantImageRepository { get; }
         public IVariantRepository VariantRepository { get; }
 
+
+        private bool _disposed;
         public async ValueTask DisposeAsync()
         {
-            await _dbContext.DisposeAsync();
+            await DisposeAsync(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual async ValueTask DisposeAsync(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    await _dbContext.DisposeAsync();
+                }
+
+                _disposed = true;
+            }
         }
 
         public async Task SaveChangesAsync()

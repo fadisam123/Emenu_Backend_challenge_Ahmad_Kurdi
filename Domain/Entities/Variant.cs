@@ -3,7 +3,7 @@
     public class Variant : BaseEntity
     {
         #region Properties
-        public String Value { get; set; } = null!;
+        public string Value { get; set; } = null!;
         #endregion
 
         #region Navigation Properties

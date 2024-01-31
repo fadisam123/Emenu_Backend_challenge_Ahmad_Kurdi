@@ -28,6 +28,7 @@ namespace Infrastructure
             services.AddScoped<IProductVariantRepository, ProductVariantRepository>();
             services.AddScoped<IVariantImageRepository, VariantImageRepository>();
             services.AddScoped<IVariantRepository, VariantRepository>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             await SeedDataInDbAsync(services.BuildServiceProvider());

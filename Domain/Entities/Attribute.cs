@@ -5,8 +5,8 @@ namespace Domain.Entities
     public class Attribute : BaseEntity
     {
         #region Properties
-        public String Name { get; set; } = null!;
-        public AttributeTypeEnum Type { get; set; }
+        public string Name { get; set; } = null!;
+        public AttributeTypeEnum Type { get; set; } = AttributeTypeEnum.Text;
         #endregion
 
         #region Navigation Properties

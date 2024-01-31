@@ -28,6 +28,21 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Products",
+                schema: "Emenu",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Desc = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Variants",
                 schema: "Emenu",
                 columns: table => new
@@ -56,34 +71,18 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Path = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MainProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AdditionalProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsMain = table.Column<bool>(type: "bit", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Images", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Products",
-                schema: "Emenu",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Desc = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MainImageId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_Images_MainImageId",
-                        column: x => x.MainImageId,
+                        name: "FK_Images_Products_ProductId",
+                        column: x => x.ProductId,
                         principalSchema: "Emenu",
-                        principalTable: "Images",
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -170,24 +169,16 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Images_AdditionalProductId",
+                name: "IX_Images_ProductId",
                 schema: "Emenu",
                 table: "Images",
-                column: "AdditionalProductId");
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductLanguages_ProductId",
                 schema: "Emenu",
                 table: "ProductLanguages",
                 column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_MainImageId",
-                schema: "Emenu",
-                table: "Products",
-                column: "MainImageId",
-                unique: true,
-                filter: "[MainImageId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductVariants_ProductId",
@@ -218,24 +209,10 @@ namespace Infrastructure.Migrations
                 schema: "Emenu",
                 table: "Variants",
                 column: "AttributeId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Images_Products_AdditionalProductId",
-                schema: "Emenu",
-                table: "Images",
-                column: "AdditionalProductId",
-                principalSchema: "Emenu",
-                principalTable: "Products",
-                principalColumn: "Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Images_Products_AdditionalProductId",
-                schema: "Emenu",
-                table: "Images");
-
             migrationBuilder.DropTable(
                 name: "ProductLanguages",
                 schema: "Emenu");
@@ -245,7 +222,15 @@ namespace Infrastructure.Migrations
                 schema: "Emenu");
 
             migrationBuilder.DropTable(
+                name: "Images",
+                schema: "Emenu");
+
+            migrationBuilder.DropTable(
                 name: "ProductVariants",
+                schema: "Emenu");
+
+            migrationBuilder.DropTable(
+                name: "Products",
                 schema: "Emenu");
 
             migrationBuilder.DropTable(
@@ -254,14 +239,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Attributes",
-                schema: "Emenu");
-
-            migrationBuilder.DropTable(
-                name: "Products",
-                schema: "Emenu");
-
-            migrationBuilder.DropTable(
-                name: "Images",
                 schema: "Emenu");
         }
     }

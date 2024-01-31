@@ -3,9 +3,9 @@
     public class ProductLanguage : BaseEntity
     {
         #region Properties
-        public String languageCode { get; set; } = null!;
-        public String Name { get; set; } = null!;
-        public String? Desc { get; set; }
+        public string languageCode { get; set; } = null!;
+        public string Name { get; set; } = null!;
+        public string? Desc { get; set; }
         #endregion
 
         #region Navigation Properties
