@@ -6,7 +6,7 @@
 
 <a href="https://github.com/fadisam123/Emenu_Backend_challenge_Ahmad_Kurdi#Run">Run</a>
 
-<a href="https://github.com/fadisam123/Emenu_Backend_challenge_Ahmad_Kurdi#Run">Notes</a>
+<a href="https://github.com/fadisam123/Emenu_Backend_challenge_Ahmad_Kurdi#Notes">Notes</a>
 
 ***
 
